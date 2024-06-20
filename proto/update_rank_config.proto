@@ -1,0 +1,27 @@
+syntax = "proto3";
+package update_rank_config;
+
+message UpdataTimeRequest{}
+message UpdateTimeResponse {
+	optional uint64 update_time = 1; 
+}
+
+
+message UpdataConfigRequest{}
+
+message RankTableConfig {
+	string appid = 1;
+	string app_secret = 2;
+	string rank_key = 3;
+	string cron_expression = 4;
+}
+
+message UpdataConfigResponse {
+	uint64 update_time = 1; 
+	repeated RankTableConfig rank_table_configs= 2;
+}
+
+service UpdateRankConfig {
+	rpc GetLastUpdateTime(UpdataTimeRequest) returns (UpdateTimeResponse);
+	rpc GetRankTableConfig(UpdataConfigRequest) returns (UpdataConfigResponse);
+}

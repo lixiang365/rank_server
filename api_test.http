@@ -1,0 +1,87 @@
+### 登录
+GET  http://127.0.0.1:3000/api/health HTTP/1.1
+
+### 注册
+POST  http://127.0.0.1:3000/api/user/register HTTP/1.1
+Content-Type: application/json
+
+{
+	"email":"a00002@123.com",
+    "password" : "002",
+    "first_name" : "lixiang",
+    "last_name" : "lixiang",
+	"user_name": "002"
+}
+### 登录
+POST  http://127.0.0.1:3000/api/user/auth HTTP/1.1
+Content-Type: application/json
+
+{
+	"email":"a00000@123.com",
+    "password" : "000"
+}
+ 
+### 验证jwt
+GET  http://127.0.0.1:3000/api/user/profile HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImVtYWlsIjoiYTAwMDAwQDEyMy5jb20iLCJpYXQiOjE3MTI3MzU2OTcsImV4cCI6MTcxMjczNzQ5N30.zUKoLT9uLopCBmEMP16KD9ZS95fXhuWnwFA4pmCD_TE
+
+###########################################################
+### 更新分数
+POST  http://127.0.0.1:3001/api/rank/update_score HTTP/1.1
+Content-Type: application/json
+appid: APPID_test123
+signature: 1c4eec58115f8cf511a290535bdbaac7
+
+{
+	"appid":"APPID_test123",
+	"rank_key": "ten_minute",
+	"openid":"openid3",
+	"nick_name":"a000003",
+	"score":300
+} 
+
+### 获取分数
+POST  http://127.0.0.1:3000/api/rank/get_user_score HTTP/1.1
+Content-Type: application/json
+
+{
+	"appid":"APPID_test123",
+	"rank_key":"half_hour",
+	"openid":"openid1"
+}
+
+### 获取排名
+POST  http://127.0.0.1:3000/api/rank/get_user_rank HTTP/1.1
+Content-Type: application/json
+
+{
+	"appid":"APPID_test123",
+	"rank_key":"half_hour",
+	"openid":"openid5"
+}
+
+### 获取top 排名用户
+POST  http://127.0.0.1:3000/api/rank/get_top_user_rank HTTP/1.1
+Content-Type: application/json
+
+{
+	"appid":"APPID_test123",
+	"rank_key":"half_hour",
+	"top_n":2
+}
+
+### 添加配置
+POST  http://127.0.0.1:3000/api/rank/add_rank_config HTTP/1.1
+Content-Type: application/json
+
+{
+	"appid":"APPID_test123",
+	"app_secret":"APP_SECRET_test123",
+	"rank_key":"half_hour",
+	"cron_expression":"0 0,30 * * * *",
+	"remark":"30分钟"
+}
+
+### 删除配置
+DELETE  http://127.0.0.1:3000/api/rank/delete_rank_config?appid=APPID_test123&rank_key=ten_minute HTTP/1.1

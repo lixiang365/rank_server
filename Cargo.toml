@@ -1,0 +1,80 @@
+[package]
+name = "rank_server"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+axum = { version = "0.7.5" }
+axum-extra = { version = "0.9.3", features = ["typed-header"] }
+axum-macros = "0.4.1"
+hyper = { version = "1.2.0", features = ["full"] }
+tokio = { version = "1.24.2", features = ["full"] }
+tower = { version = "0.4.13", features = ["full"] }
+tower-http = { version = "0.5.2", features = ["full"] }
+dotenv = "^0.14.0"
+serde = { version = "1.0.152", features = ["derive"] }
+jsonwebtoken = "^9.3.0"
+thiserror = "1.0.40"
+chrono = { version = "0.4.37", features = ["serde"] }
+bcrypt = "0.15.1"
+serde_json = "1.0.95"
+mockall = "0.12.1"
+sqlx = { version = "0.7.4", features = [
+	"runtime-tokio-native-tls",
+	"migrate",
+	"chrono",
+	"time",
+] }
+sqlx-cli = "0.7.4"
+validator = { version = "0.18.1", features = ["derive"] }
+async-trait = "0.1.68"
+# 日志
+tracing = { version = "0.1" }
+tracing-subscriber = { version = "0.3.17", features = [
+	"env-filter",
+	"local-time",
+] }
+# 日志写文件
+tracing-appender = { version = "0.2" }
+redis = { version = "0.25.3", features = [] } # redis
+
+deadpool-redis = { version = "*" }
+# 一次运行
+once_cell = { version = "1.0" }
+
+# MD5
+md5 = "0.7.0"
+
+base64 = "^0.21.0"
+
+bytes = "1.5"
+
+http-body = "1.0"
+http-body-util = "0.1"
+
+# 计划任务
+cron = "0.12.1"
+tokio-cron-scheduler = { version = "*" }
+
+uuid = { version = "1.8.0" }
+
+# grpc protobuf
+prost = "0.12.0"
+tonic = "0.11.0"
+
+# Q: 为什么要引入内存分配器？
+# A: hyper在默认分配器下，如果有大量并发就会造成内存增长（只和并发有关，与时间无关），随着时间推移也不会释放。更换内存分配器可以解决这个问题
+# alloc
+mimalloc = { version = "*", features = ["secure"] }
+
+[target.'cfg(not(target_env = "msvc"))'.dependencies]
+tikv-jemallocator = "0.5"
+
+
+[build-dependencies]
+tonic-build = "0.11.0"
+
+
+[profile.release]
+codegen-units = 1
+lto = "fat"
